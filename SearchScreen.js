@@ -62,7 +62,7 @@ export default function App() {
             </Text>
             <Image
             style={styles.gifStyle}
-            source={require('./Assets/kropeczki1.gif')}
+            source={require('./Assets/dots.gif')}
           />
             <Image
               style={styles.imageStyle}
