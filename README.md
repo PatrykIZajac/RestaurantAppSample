@@ -29,6 +29,7 @@ npx react-native run-android
 
 * [react-native-community/geolocation](https://github.com/react-native-community/react-native-geolocation)
 * [react-native-snap-carousel](https://github.com/archriss/react-native-snap-carousel)
+* [react-native-router-flux](https://github.com/aksonov/react-native-router-flux)
 * [axios](https://www.npmjs.com/package/axios)
 
 ## Deprecated Error
