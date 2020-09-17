@@ -8,8 +8,6 @@ import {
   Linking,
   Platform,
   ScrollView,
-  FlatList,
-  Button,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import yelp from './api/yelp';

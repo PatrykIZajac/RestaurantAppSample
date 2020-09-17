@@ -25,6 +25,13 @@ npx react-native run-android
 
 ![usage of app](https://media.giphy.com/media/iheaeqx9IFHVDoAqvs/giphy.gif)
 
+## Some images from app
+
+![screen1](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen1.jpg)
+![screen2](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen2.jpg)
+![screen3](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen3.jpg)
+
+
 
 ## Libraries
 
