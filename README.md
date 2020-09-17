@@ -27,9 +27,9 @@ npx react-native run-android
 
 ## Some images from app
 
-![screen1](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen1.jpg)
-![screen2](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen2.jpg)
-![screen3](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen3.jpg)
+![screen1](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen1.png)
+![screen2](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen2.png)
+![screen3](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen3.png)
 
 
 
