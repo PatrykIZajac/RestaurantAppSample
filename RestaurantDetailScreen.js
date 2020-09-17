@@ -7,33 +7,53 @@ import {
   TouchableOpacity,
   Linking,
   Platform,
-  Button,
   ScrollView,
+  FlatList,
+  Button,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import yelp from './api/yelp';
 import Carousel from 'react-native-snap-carousel';
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
+import { List } from 'react-native-paper';
 
-export default function RestaurantDetailScreen({result, id}) {
-  const [resultFromApi, setResultFromApi] = useState('');
+export default function RestaurantDetailScreen({id}) {
+  const [resultFromApi, setResultFromApi] = useState({
+    name: 'laoding!',
+    address: 'loading!',
+    phone: 'loading!',
+    open: 'set false',
+    photos: [],
+    categories: '',
+    //openDays: undefined,
+  });
 
   LogBox.ignoreLogs(['Failed prop type: ']);
 
-  const getResult = async (id) => {
-    const response = await yelp.get('/' + id);
-    setResultFromApi(response.data);
-    //console.log(response.data);
+  const getResult = async () => {
+    const response = await yelp.get(`${id}`);
+
+    setResultFromApi({
+      name: response.data.name,
+      address: response.data.location.address1,
+      phone: response.data.phone,
+      open: response.data.hours[0].is_open_now,
+      photos: response.data.photos,
+      categories: response.data.categories[0].alias,
+      //openDays: response.data.hours[0].open,
+    });
+
+    console.log('data set from api with business id');
+    //console.log(response.data.hours[0].is_open_now);
   };
 
   useEffect(() => {
-    getResult(id);
-    console.log(id);
+    getResult();
   }, []);
 
   const openGps = () => {
     const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
-    const label = result.name;
+    const label = resultFromApi.name;
     const url = Platform.select({
       ios: `${scheme}${label}`,
       android: `${scheme}${label}`,
@@ -49,6 +69,7 @@ export default function RestaurantDetailScreen({result, id}) {
     }
   };
 
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -62,38 +83,38 @@ export default function RestaurantDetailScreen({result, id}) {
               source={require('./Assets/arrowIcon.png')}
             />
           </TouchableOpacity>
-          <Text style={styles.restaurantNameStyle}>{result.name}</Text>
+          <Text style={styles.restaurantNameStyle}>{resultFromApi.name}</Text>
         </View>
 
         <View style={styles.cardStyle}>
           <View style={styles.textInCard}>
             <Text style={styles.typeTextStyle}>phone:</Text>
-            {result.phone === '' ? (
+            {resultFromApi.phone === '' ? (
               <Text style={styles.infoStyle}>
                 No information about phone in DB
               </Text>
             ) : (
-              <Text style={styles.infoStyle}>{result.phone}</Text>
+              <Text style={styles.infoStyle}>{resultFromApi.phone}</Text>
             )}
           </View>
 
           <View style={styles.textInCard}>
-            <Text style={styles.typeTextStyle}>Open:</Text>
-            {result.is_closed === false ? (
-              <Text style={{color: '#04E762', marginLeft: 10}}>YES</Text>
+            <Text style={styles.typeTextStyle}>addres:</Text>
+            <Text style={styles.infoStyle}>{resultFromApi.address}</Text>
+          </View>
+
+          <View style={styles.textInCard}>
+            <Text style={styles.typeTextStyle}>category:</Text>
+            <Text style={styles.infoStyle}>{resultFromApi.categories}</Text>
+          </View>
+
+          <View style={styles.textInCard}>
+            <Text style={styles.typeTextStyle}>Open status:</Text>
+            {resultFromApi.open === true ? (
+              <Text style={{color: '#04E762', marginLeft: 10}}>Open</Text>
             ) : (
-              <Text style={{color: '#ff0000', marginLeft: 10}}>NO</Text>
+              <Text style={{color: '#ff0000', marginLeft: 10}}>Closed</Text>
             )}
-          </View>
-
-          <View style={styles.textInCard}>
-            <Text style={styles.typeTextStyle}>adres:</Text>
-            <Text style={styles.infoStyle}>{result.location.address1}</Text>
-          </View>
-
-          <View style={styles.textInCard}>
-            <Text style={styles.typeTextStyle}>categories:</Text>
-            <Text style={styles.infoStyle}>{result.categories[0].alias}</Text>
           </View>
         </View>
 
@@ -118,7 +139,7 @@ export default function RestaurantDetailScreen({result, id}) {
             <Image source={require('./Assets/mapIcon.png')} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => openPhone(result.phone)}>
+          <TouchableOpacity onPress={() => openPhone(resultFromApi.phone)}>
             <Image source={require('./Assets/phoneIcon.png')} />
           </TouchableOpacity>
         </View>
@@ -151,7 +172,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     flex: 1,
     flexWrap: 'wrap',
-    color:'black'
+    color: 'black',
   },
   arrowIconStyle: {
     marginLeft: 10,
@@ -168,10 +189,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 6,
+    alignItems: 'center',
   },
   textInCard: {
     flexDirection: 'row',
-    //alignItems: 'center',
     margin: 10,
   },
   typeTextStyle: {
@@ -198,8 +219,7 @@ const styles = StyleSheet.create({
     elevation: 11,
   },
   btnsArea: {
-    // alignItems: 'center',
-    marginTop: 40,
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },

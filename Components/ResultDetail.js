@@ -3,12 +3,13 @@ import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react
 import {Actions} from 'react-native-router-flux';
 
 export default function ResultDetail({result}) {
+
   return (
     <ScrollView>
     <View style={styles.restaurantPageStyle}>
       <TouchableOpacity
         onPress={() => {
-          Actions.Details({result: result, id: result.id});
+          Actions.Details({id: result.id});
         }}>
         <Image style={styles.image} source={{uri: result.image_url}} />
         <Text style={styles.restaurantName}>{result.name}</Text>

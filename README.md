@@ -4,7 +4,8 @@
 [![version](https://img.shields.io/badge/react_native-0.63.2-blue.svg)](https://reactnative.dev/)
 [![version](https://img.shields.io/badge/npm-6.14.5-orange.svg)](https://www.npmjs.com/)
 
-Sample application that shows the nearest restaurants in our area.
+An example application showing the nearest restaurants in our area, if we choose one of them, we can call the restaurant or set navigation to it.
+
 
 ## Installation
 
@@ -31,6 +32,7 @@ npx react-native run-android
 * [react-native-snap-carousel](https://github.com/archriss/react-native-snap-carousel)
 * [react-native-router-flux](https://github.com/aksonov/react-native-router-flux)
 * [axios](https://www.npmjs.com/package/axios)
+* [Yelp](https://www.yelp.com/developers/documentation/v3/business_search)
 
 ## Deprecated Error
 

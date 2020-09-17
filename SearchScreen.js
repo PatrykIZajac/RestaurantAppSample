@@ -28,9 +28,9 @@ export default function App() {
       params: {
         limit: 50,
         term: textInput,
-        latitude: coordinates.latitude,
-        longitude: coordinates.longitude,
-        // location:'san jose'
+        // latitude: coordinates.latitude,
+        // longitude: coordinates.longitude,
+        location:'san jose'
       },
     });
     console.log('input: ', textInput);
