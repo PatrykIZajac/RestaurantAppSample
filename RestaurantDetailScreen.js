@@ -8,12 +8,14 @@ import {
   Linking,
   Platform,
   ScrollView,
+  FlatList,
+  Button,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import yelp from './api/yelp';
 import Carousel from 'react-native-snap-carousel';
 import {LogBox} from 'react-native';
-import { List } from 'react-native-paper';
+import {Container, Content, Accordion} from 'native-base';
 
 export default function RestaurantDetailScreen({id}) {
   const [resultFromApi, setResultFromApi] = useState({
@@ -23,14 +25,14 @@ export default function RestaurantDetailScreen({id}) {
     open: 'set false',
     photos: [],
     categories: '',
-    //openDays: undefined,
+    openDays: [],
   });
+  const dataArray = [{title: 'Opening hours'}];
 
   LogBox.ignoreLogs(['Failed prop type: ']);
 
   const getResult = async () => {
     const response = await yelp.get(`${id}`);
-
     setResultFromApi({
       name: response.data.name,
       address: response.data.location.address1,
@@ -38,11 +40,9 @@ export default function RestaurantDetailScreen({id}) {
       open: response.data.hours[0].is_open_now,
       photos: response.data.photos,
       categories: response.data.categories[0].alias,
-      //openDays: response.data.hours[0].open,
+      openDays: response.data.hours[0].open,
     });
-
     console.log('data set from api with business id');
-    //console.log(response.data.hours[0].is_open_now);
   };
 
   useEffect(() => {
@@ -67,10 +67,8 @@ export default function RestaurantDetailScreen({id}) {
     }
   };
 
-
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <View style={styles.container}>
         <View style={styles.optionBar}>
           <TouchableOpacity
             onPress={() => {
@@ -83,7 +81,6 @@ export default function RestaurantDetailScreen({id}) {
           </TouchableOpacity>
           <Text style={styles.restaurantNameStyle}>{resultFromApi.name}</Text>
         </View>
-
         <View style={styles.cardStyle}>
           <View style={styles.textInCard}>
             <Text style={styles.typeTextStyle}>phone:</Text>
@@ -115,34 +112,59 @@ export default function RestaurantDetailScreen({id}) {
             )}
           </View>
         </View>
-
-        <View style={styles.carouselStyle}>
-          <Carousel
-            layout={'default'}
-            data={resultFromApi.photos}
-            renderItem={({item}) => {
-              return (
-                <View>
-                  <Image style={styles.galleryStyle} source={{uri: item}} />
-                </View>
-              );
+      <Container>
+        <Content padder={true}>
+          <Accordion
+            headerStyle={{
+              backgroundColor: '#FFD700',
             }}
-            sliderWidth={500}
-            itemWidth={250}
+            dataArray={dataArray}
+            renderContent={() => {
+              return resultFromApi.openDays.map((data) => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      backgroundColor: '#FFD700',
+                      justifyContent: 'center',
+                    }}>
+                    <Text>{data.day}</Text>
+                    <Text style={{marginLeft: 40}}>{data.start}</Text>
+                    <Text style={{marginLeft: 40}}>{data.end}</Text>
+                  </View>
+                );
+              });
+            }}
           />
-        </View>
 
-        <View style={styles.btnsArea}>
-          <TouchableOpacity onPress={() => openGps()}>
-            <Image source={require('./Assets/mapIcon.png')} />
-          </TouchableOpacity>
+          <View style={styles.carouselStyle}>
+            <Carousel
+              layout={'default'}
+              data={resultFromApi.photos}
+              renderItem={({item}) => {
+                return (
+                  <View>
+                    <Image style={styles.galleryStyle} source={{uri: item}} />
+                  </View>
+                );
+              }}
+              sliderWidth={400}
+              itemWidth={220}
+            />
+          </View>
 
-          <TouchableOpacity onPress={() => openPhone(resultFromApi.phone)}>
-            <Image source={require('./Assets/phoneIcon.png')} />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+          <View style={styles.btnsArea}>
+            <TouchableOpacity onPress={() => openGps()}>
+              <Image source={require('./Assets/mapIcon.png')} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => openPhone(resultFromApi.phone)}>
+              <Image source={require('./Assets/phoneIcon.png')} />
+            </TouchableOpacity>
+          </View>
+        </Content>
+      </Container>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -222,8 +244,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   galleryStyle: {
-    width: 250,
-    height: 180,
+    width: 220,
+    height: 155,
     borderRadius: 10,
     justifyContent: 'center',
   },
