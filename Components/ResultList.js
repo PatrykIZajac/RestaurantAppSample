@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View, Text, FlatList, ScrollView} from 'react-native';
 import ResultDetail from './ResultDetail';
 
-
 export default function ResultList({title, results}) {
   if (results.length === 0) {
     return null;

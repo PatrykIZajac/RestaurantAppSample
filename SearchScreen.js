@@ -4,6 +4,8 @@ import Header from './Components/Header';
 import yelp from './api/yelp';
 import ResultList from './Components/ResultList';
 import Geolocation from '@react-native-community/geolocation';
+import FlashMessage from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
 
 export default function App() {
   const [textInput, setTextInput] = useState('');
@@ -20,21 +22,50 @@ export default function App() {
         longitude: position.coords.longitude,
       });
     });
-    console.log(coordinates.latitude, coordinates.longitude);
+    //console.log(coordinates.latitude, coordinates.longitude);
   };
 
   const searchApi = async () => {
-    const response = await yelp.get('/search', {
-      params: {
-        limit: 50,
-        term: textInput,
-        latitude: coordinates.latitude,
-        longitude: coordinates.longitude,
-        //location:'san jose'
-      },
-    });
-    console.log('input: ', textInput);
-    setResults(response.data.businesses);
+    try {
+      if (textInput === '') {
+        showMessage({
+          message: 'Warning',
+          description: 'Text field is empty. Type phrase.',
+          type: 'warning',
+          backgroundColor: '#FFD700',
+          color: 'black',
+          icon:'warning',
+          style:{height:80},
+          animationDuration:180,
+          duration:2000,
+        });
+      } else {
+        const response = await yelp.get('/search', {
+          params: {
+            limit: 50,
+            term: textInput,
+            latitude: coordinates.latitude,
+            longitude: coordinates.longitude,
+            //location:'san jose'
+          },
+        });
+        console.log('input: ', textInput);
+        setResults(response.data.businesses);
+        setTextInput('');
+
+        showMessage({
+          message: 'Succes',
+          description: 'Correct phrase',
+          type: 'success',
+          color: 'white',
+          icon:'success',
+          style:{alignItems:'center'},
+          animationDuration:180,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const searchByPrice = (price) => {
@@ -48,7 +79,8 @@ export default function App() {
   }, [coordinates.latitude, coordinates.longitude]);
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <FlashMessage position="top" />
       <View style={styles.container}>
         <Header
           setTextInput={(value) => setTextInput(value)}
@@ -58,12 +90,12 @@ export default function App() {
         {results.length === 0 ? (
           <View style={styles.pageOneStyle}>
             <Text style={styles.textStyle}>
-              Write name of category that you looking for 
+              Write name of category that you looking for
             </Text>
             <Image
-            style={styles.gifStyle}
-            source={require('./Assets/dots.gif')}
-          />
+              style={styles.gifStyle}
+              source={require('./Assets/dots.gif')}
+            />
             <Image
               style={styles.imageStyle}
               source={require('./Assets/foodIcon.png')}
@@ -99,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     flex: 1,
     flexWrap: 'wrap',
-    textAlign:'center'
+    textAlign: 'center',
   },
   pageOneStyle: {
     alignItems: 'center',
@@ -111,5 +143,4 @@ const styles = StyleSheet.create({
     height: 70,
     backgroundColor: 'white',
   },
-  
 });

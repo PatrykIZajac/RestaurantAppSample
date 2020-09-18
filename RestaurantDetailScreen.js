@@ -7,9 +7,6 @@ import {
   TouchableOpacity,
   Linking,
   Platform,
-  ScrollView,
-  FlatList,
-  Button,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import yelp from './api/yelp';
@@ -18,6 +15,7 @@ import {LogBox} from 'react-native';
 import {Container, Content, Accordion} from 'native-base';
 
 export default function RestaurantDetailScreen({id}) {
+
   const [resultFromApi, setResultFromApi] = useState({
     name: 'laoding!',
     address: 'loading!',
@@ -27,7 +25,7 @@ export default function RestaurantDetailScreen({id}) {
     categories: '',
     openDays: [],
   });
-  const dataArray = [{title: 'Opening hours'}];
+  const openingHoursArray = [{title: 'Opening hours'}];
 
   LogBox.ignoreLogs(['Failed prop type: ']);
 
@@ -112,17 +110,19 @@ export default function RestaurantDetailScreen({id}) {
             )}
           </View>
         </View>
+
       <Container>
         <Content padder={true}>
           <Accordion
             headerStyle={{
               backgroundColor: '#FFD700',
             }}
-            dataArray={dataArray}
+            dataArray={openingHoursArray}
             renderContent={() => {
               return resultFromApi.openDays.map((data) => {
                 return (
                   <View
+                    key={data.day}
                     style={{
                       flexDirection: 'row',
                       backgroundColor: '#FFD700',

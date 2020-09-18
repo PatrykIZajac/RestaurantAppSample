@@ -40,6 +40,9 @@ npx react-native run-android
 * [react-native-router-flux](https://github.com/aksonov/react-native-router-flux)
 * [axios](https://www.npmjs.com/package/axios)
 * [Yelp](https://www.yelp.com/developers/documentation/v3/business_search)
+* [Native Base](https://docs.nativebase.io/docs/GetStarted.html)
+* [react-native-flash-message](https://github.com/lucasferreira/react-native-flash-message)
+
 
 ## Deprecated Error
 
