@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Image, ScrollView} from 'react-native';
 import Header from './Components/Header';
+import StartScreen from './Components/StartScreen';
 import yelp from './api/yelp';
 import ResultList from './Components/ResultList';
 import Geolocation from '@react-native-community/geolocation';
@@ -34,10 +35,10 @@ export default function App() {
           type: 'warning',
           backgroundColor: '#FFD700',
           color: 'black',
-          icon:'warning',
-          style:{height:80},
-          animationDuration:180,
-          duration:2000,
+          icon: 'warning',
+          style: {height: 80},
+          animationDuration: 180,
+          duration: 2000,
         });
       } else {
         const response = await yelp.get('/search', {
@@ -58,9 +59,9 @@ export default function App() {
           description: 'Correct phrase',
           type: 'success',
           color: 'white',
-          icon:'success',
-          style:{alignItems:'center'},
-          animationDuration:180,
+          icon: 'success',
+          style: {alignItems: 'center'},
+          animationDuration: 180,
         });
       }
     } catch (error) {
@@ -88,19 +89,7 @@ export default function App() {
           textInput={textInput}
         />
         {results.length === 0 ? (
-          <View style={styles.pageOneStyle}>
-            <Text style={styles.textStyle}>
-              Write name of category that you looking for
-            </Text>
-            <Image
-              style={styles.gifStyle}
-              source={require('./Assets/dots.gif')}
-            />
-            <Image
-              style={styles.imageStyle}
-              source={require('./Assets/foodIcon.png')}
-            />
-          </View>
+          <StartScreen />
         ) : (
           <View>
             <View style={styles.sectionStyle}>
