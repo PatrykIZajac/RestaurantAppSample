@@ -23,13 +23,13 @@ npx react-native run-android
 
 ## Usage
 
-![usage of app](https://media.giphy.com/media/iheaeqx9IFHVDoAqvs/giphy.gif)
+![usage of app](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/restaurantApp.gif)
 
 ## Some images from app
 
-![screen1](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen1.png)
-![screen2](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen2.png)
-![screen3](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/screen3.png)
+![screen1](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/Screen1.png)
+![screen2](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/Screen2.png)
+![screen3](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/Screen3.png)
 
 
 
