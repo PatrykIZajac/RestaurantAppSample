@@ -23,7 +23,7 @@ npx react-native run-android
 
 ## Usage
 
-![usage of app](https://media.giphy.com/media/PtqFGjRjjzdnbsJ7cF/giphy.gif)
+![usage of app](https://media.giphy.com/media/iheaeqx9IFHVDoAqvs/giphy.gif)
 
 ## Some images from app
 
