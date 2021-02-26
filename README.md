@@ -44,8 +44,3 @@ npx react-native run-android
 * [react-native-flash-message](https://github.com/lucasferreira/react-native-flash-message)
 
 
-## Deprecated Error
-
-![error image](https://github.com/PatrykIZajac/RestaurantAppSample/blob/master/Assets/deprecatedError.png)
-
-This error is common and will be fixed by autors in the next feature react-native-router-flux library.
